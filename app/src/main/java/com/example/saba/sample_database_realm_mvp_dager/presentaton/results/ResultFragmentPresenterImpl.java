@@ -6,4 +6,8 @@ import com.example.saba.sample_database_realm_mvp_dager.base.BasePresenter;
 public class ResultFragmentPresenterImpl  extends BasePresenter<ResultsView> implements ResultFragmentPresenter {
 
 
+    @Override
+    public void getTest() {
+        mView.showTest();
+    }
 }

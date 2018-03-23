@@ -7,11 +7,11 @@ public class BasePresenter<T> {
 
     protected T mView;
 
-    final void attach(@Nonnull final T view) {
+    public final void attach(@Nonnull final T view) {
         mView = view;
     }
 
-    final void detach() {
+    public final void detach() {
         mView = null;
     }
 }
