@@ -11,7 +11,7 @@ public class ResultFragmentPresenterImpl  extends BasePresenter<ResultsView> imp
 
     private SelectAllUseCase selectAllUseCase;
 
-    public ResultFragmentPresenterImpl(SelectAllUseCase selectAllUseCase) {
+    ResultFragmentPresenterImpl(SelectAllUseCase selectAllUseCase) {
         this.selectAllUseCase = selectAllUseCase;
     }
 

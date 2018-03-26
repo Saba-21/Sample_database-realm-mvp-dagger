@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.example.saba.sample_database_realm_mvp_dager.R;
 import javax.inject.Inject;
+import butterknife.OnClick;
 import dagger.android.support.DaggerFragment;
 
 public class DropFragment extends DaggerFragment implements DropView {
 
-    @Inject
+    @OnClick(R.id.drop) void add() {
+        mPresenter.drop();
+    }
+
+        @Inject
     DropPresenterImpl mPresenter;
 
     public DropFragment() {
@@ -30,9 +34,6 @@ public class DropFragment extends DaggerFragment implements DropView {
         View view = inflater.inflate(R.layout.fragment_drop, container, false);
 
         mPresenter.attach(this);
-
-        view.findViewById(R.id.drop).setOnClickListener(v ->
-          mPresenter.drop());
 
         return view;
     }

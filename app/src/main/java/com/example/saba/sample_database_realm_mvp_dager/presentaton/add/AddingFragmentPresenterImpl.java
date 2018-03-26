@@ -9,7 +9,7 @@ public class AddingFragmentPresenterImpl extends BasePresenter<AddingView> imple
 
     private SaveDataUseCase saveDataUseCase;
 
-    public AddingFragmentPresenterImpl(SaveDataUseCase saveDataUseCase) {
+    AddingFragmentPresenterImpl(SaveDataUseCase saveDataUseCase) {
         this.saveDataUseCase = saveDataUseCase;
     }
 

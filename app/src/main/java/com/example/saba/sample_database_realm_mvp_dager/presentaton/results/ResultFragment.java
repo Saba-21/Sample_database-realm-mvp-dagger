@@ -4,19 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.example.saba.sample_database_realm_mvp_dager.R;
-import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModel;
 import com.zuluft.autoadapter.AutoAdapter;
 import com.zuluft.generated.AutoAdapterFactory;
-
-import java.util.List;
-
 import javax.inject.Inject;
 import dagger.android.support.DaggerFragment;
 
@@ -48,15 +43,10 @@ public class ResultFragment extends DaggerFragment implements ResultsView{
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        List<CarModel> list = mPresenter.getAllObjects();
-
         AutoAdapter autoAdapter = AutoAdapterFactory.createAutoAdapter();
-        autoAdapter.addAll(Stream.of(list)
-                .map(CarListRenderer::new)
-                .collect(Collectors.toList()));
+        autoAdapter.addAll(Stream.of(mPresenter.getAllObjects()).map(CarListRenderer::new).collect(Collectors.toList()));
 
         recyclerView.setAdapter(autoAdapter);
-        autoAdapter.notifyDataSetChanged();
 
         return view;
     }

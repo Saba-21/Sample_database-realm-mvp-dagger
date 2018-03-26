@@ -1,17 +1,11 @@
 package com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders;
 
 
-
-import android.util.Log;
-
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModel;
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModelConstants;
-
 import java.util.List;
-
 import javax.annotation.Nonnull;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class LocalDataProviderImpl implements LocalDataProvider {
 

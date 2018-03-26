@@ -8,7 +8,7 @@ public class DropPresenterImpl extends BasePresenter<DropView> implements DropPr
 
     private DropAllUseCase dropAllUseCase;
 
-    public DropPresenterImpl(DropAllUseCase dropAllUseCase) {
+    DropPresenterImpl(DropAllUseCase dropAllUseCase) {
         this.dropAllUseCase = dropAllUseCase;
     }
 

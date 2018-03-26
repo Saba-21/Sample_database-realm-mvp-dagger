@@ -1,24 +1,34 @@
 package com.example.saba.sample_database_realm_mvp_dager.presentaton.add;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.example.saba.sample_database_realm_mvp_dager.R;
-
 import javax.inject.Inject;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 import dagger.android.support.DaggerFragment;
 
 public class AddingFragment extends DaggerFragment implements AddingView{
 
-    private EditText mark, model, type, country, id;
+    @BindView(R.id.mark_input) EditText mark;
+    @BindView(R.id.model_input) EditText model;
+    @BindView(R.id.type_input) EditText type;
+    @BindView(R.id.country_input) EditText country;
+    @BindView(R.id.ID_input) EditText id;
+
+    @OnClick(R.id.add) void add(){
+        mPresenter.addObject(
+                mark.getText().toString(),
+                model.getText().toString(),
+                type.getText().toString(),
+                country.getText().toString(),
+                id.getText().toString());
+        clear();
+    }
 
     @Inject
     AddingFragmentPresenterImpl mPresenter;
@@ -39,23 +49,7 @@ public class AddingFragment extends DaggerFragment implements AddingView{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_adding, container, false);
 
-        mark = view.findViewById(R.id.mark_input);
-        model = view.findViewById(R.id.model_input);
-        type = view.findViewById(R.id.type_input);
-        country = view.findViewById(R.id.country_input);
-        id = view.findViewById(R.id.ID_input);
-
         mPresenter.attach(this);
-
-        view.findViewById(R.id.add).setOnClickListener(v -> {
-            mPresenter.addObject(
-                    mark.getText().toString(),
-                    model.getText().toString(),
-                    type.getText().toString(),
-                    country.getText().toString(),
-                    id.getText().toString());
-            clear();
-        });
 
         return view;
     }
