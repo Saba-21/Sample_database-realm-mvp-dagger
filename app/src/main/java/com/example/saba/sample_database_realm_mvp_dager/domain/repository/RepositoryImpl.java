@@ -1,13 +1,11 @@
 package com.example.saba.sample_database_realm_mvp_dager.domain.repository;
 
 
-
 import com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders.LocalDataProvider;
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModel;
-
+import java.util.List;
 import javax.annotation.Nonnull;
 
-import io.realm.RealmResults;
 
 public class RepositoryImpl implements Repository {
 
@@ -23,27 +21,27 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public RealmResults<CarModel> selectAll() {
+    public List<CarModel> selectAll() {
         return mLocalDataProvider.selectAll();
     }
 
     @Override
-    public RealmResults<CarModel> selectByMark(String mark) {
+    public List<CarModel> selectByMark(String mark) {
         return mLocalDataProvider.selectByMark(mark);
     }
 
     @Override
-    public RealmResults<CarModel> selectByModel(String model) {
+    public List<CarModel> selectByModel(String model) {
         return mLocalDataProvider.selectByModel(model);
     }
 
     @Override
-    public RealmResults<CarModel> selectByType(String type) {
+    public List<CarModel> selectByType(String type) {
         return mLocalDataProvider.selectByType(type);
     }
 
     @Override
-    public RealmResults<CarModel> selectByCountry(String country) {
+    public List<CarModel> selectByCountry(String country) {
         return mLocalDataProvider.selectByCountry(country);
     }
 

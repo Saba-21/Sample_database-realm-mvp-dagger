@@ -1,13 +1,15 @@
 package com.example.saba.sample_database_realm_mvp_dager.domain.useCases;
 
 
+import android.content.Context;
+import android.util.Log;
+
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModel;
 import com.example.saba.sample_database_realm_mvp_dager.domain.repository.Repository;
 import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.base.BaseUseCase;
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
-import io.realm.RealmResults;
 
 
 public class SelectByTypeUseCase extends BaseUseCase {
@@ -17,7 +19,7 @@ public class SelectByTypeUseCase extends BaseUseCase {
         super(mRepository);
     }
 
-    public RealmResults<CarModel> select(String type){
+    public List<CarModel> select(String type){
         return mRepository.selectByType(type);
     }
 

@@ -2,8 +2,12 @@ package com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders;
 
 
 
+import android.util.Log;
+
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModel;
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModelConstants;
+
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import io.realm.Realm;
@@ -33,46 +37,10 @@ public class LocalDataProviderImpl implements LocalDataProvider {
     }
 
     @Override
-    public RealmResults<CarModel> selectAll() {
+    public List<CarModel> selectAll() {
         return Realm
                 .getDefaultInstance()
                 .where(CarModel.class)
-                .findAll();
-    }
-
-    @Override
-    public RealmResults<CarModel> selectByMark(String mark) {
-        return Realm
-                .getDefaultInstance()
-                .where(CarModel.class)
-                .equalTo(CarModelConstants.mark, mark)
-                .findAll();
-    }
-
-    @Override
-    public RealmResults<CarModel> selectByModel(String model) {
-        return Realm
-                .getDefaultInstance()
-                .where(CarModel.class)
-                .equalTo(CarModelConstants.model, model)
-                .findAll();
-    }
-
-    @Override
-    public RealmResults<CarModel> selectByType(String type) {
-        return Realm
-                .getDefaultInstance()
-                .where(CarModel.class)
-                .equalTo(CarModelConstants.type, type)
-                .findAll();
-    }
-
-    @Override
-    public RealmResults<CarModel> selectByCountry(String country) {
-        return Realm
-                .getDefaultInstance()
-                .where(CarModel.class)
-                .equalTo(CarModelConstants.country, country)
                 .findAll();
     }
 
@@ -81,6 +49,42 @@ public class LocalDataProviderImpl implements LocalDataProvider {
         Realm realm = createRealmAndBeginTransaction();
         realm.deleteAll();
         commitTransactionAndCloseRealm(realm);
+    }
+
+    @Override
+    public List<CarModel> selectByMark(String mark) {
+        return Realm
+                .getDefaultInstance()
+                .where(CarModel.class)
+                .equalTo(CarModelConstants.mark, mark)
+                .findAll();
+    }
+
+    @Override
+    public List<CarModel> selectByModel(String model) {
+        return Realm
+                .getDefaultInstance()
+                .where(CarModel.class)
+                .equalTo(CarModelConstants.model, model)
+                .findAll();
+    }
+
+    @Override
+    public List<CarModel> selectByType(String type) {
+        return Realm
+                .getDefaultInstance()
+                .where(CarModel.class)
+                .equalTo(CarModelConstants.type, type)
+                .findAll();
+    }
+
+    @Override
+    public List<CarModel> selectByCountry(String country) {
+        return Realm
+                .getDefaultInstance()
+                .where(CarModel.class)
+                .equalTo(CarModelConstants.country, country)
+                .findAll();
     }
 
     @Override

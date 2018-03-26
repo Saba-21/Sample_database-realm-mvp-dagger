@@ -16,6 +16,17 @@ public class CarModel extends RealmObject {
     @PrimaryKey
     private int id;
 
+    public CarModel() {
+    }
+
+    public CarModel(String mark, String model, String type, String country, int id) {
+        this.mark = mark;
+        this.model = model;
+        this.type = type;
+        this.country = country;
+        this.id = id;
+    }
+
     public String getMark() {
         return mark;
     }

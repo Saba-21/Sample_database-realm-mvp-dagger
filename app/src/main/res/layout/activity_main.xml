@@ -7,10 +7,11 @@
     android:orientation="vertical"
     tools:context="com.example.saba.sample_database_realm_mvp_dager.presentaton.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/container"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,25 +20,30 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="main"
-                android:id="@+id/select_all"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="drop"
-                android:id="@+id/drop_all" />
+                android:text="add"
+                android:id="@+id/add_fragment"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="add"
-                android:id="@+id/add_fragment" />
+                android:text="drop"
+                android:id="@+id/drop_fragment"/>
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="result"
-                android:id="@+id/result" />
+                android:text="get"
+                android:id="@+id/get_fragment"/>
         </LinearLayout>
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/frame_result">
     </FrameLayout>
 
 </LinearLayout>

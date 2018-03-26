@@ -6,16 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.saba.sample_database_realm_mvp_dager.R;
-
 import javax.inject.Inject;
-
 import dagger.android.support.DaggerFragment;
 
 public class DropFragment extends DaggerFragment implements DropView {
-
-    private Context context;
 
     @Inject
     DropPresenterImpl mPresenter;
@@ -23,10 +18,7 @@ public class DropFragment extends DaggerFragment implements DropView {
     public DropFragment() {
     }
 
-    public static DropFragment newInstance() {
-        DropFragment fragment = new DropFragment();
-        return fragment;
-    }
+    public static DropFragment newInstance() { return new DropFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +31,8 @@ public class DropFragment extends DaggerFragment implements DropView {
 
         mPresenter.attach(this);
 
-        mPresenter.getTest();
+        view.findViewById(R.id.drop).setOnClickListener(v ->
+          mPresenter.drop());
 
         return view;
     }
@@ -47,12 +40,6 @@ public class DropFragment extends DaggerFragment implements DropView {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
-    }
-
-    @Override
-    public void showTest() {
-        Toast.makeText(context, "drop fragment test success", Toast.LENGTH_SHORT).show();
     }
 
 }

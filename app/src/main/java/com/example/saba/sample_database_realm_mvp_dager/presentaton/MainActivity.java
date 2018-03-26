@@ -1,13 +1,10 @@
 package com.example.saba.sample_database_realm_mvp_dager.presentaton;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 import com.example.saba.sample_database_realm_mvp_dager.R;
 import com.example.saba.sample_database_realm_mvp_dager.presentaton.add.AddingFragment;
 import com.example.saba.sample_database_realm_mvp_dager.presentaton.drop.DropFragment;
 import com.example.saba.sample_database_realm_mvp_dager.presentaton.results.ResultFragment;
-
 import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 
@@ -24,36 +21,24 @@ public class MainActivity extends DaggerAppCompatActivity implements MainView {
 
         mPresenter.attach(this);
 
-        findViewById(R.id.add_fragment).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, AddingFragment.newInstance()).commit();
-            }
-        });
+        findViewById(R.id.add_fragment).setOnClickListener(view ->
+                getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_result, AddingFragment.newInstance())
+                .commit());
 
-        findViewById(R.id.drop_all).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, DropFragment.newInstance()).commit();
-            }
-        });
-        findViewById(R.id.result).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, ResultFragment.newInstance()).commit();
-            }
-        });
+        findViewById(R.id.drop_fragment).setOnClickListener(view ->
+                getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_result, DropFragment.newInstance())
+                .commit());
 
-        findViewById(R.id.select_all).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.getTest();
-            }
-        });
+        findViewById(R.id.get_fragment).setOnClickListener(v ->
+                getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_result, ResultFragment.newInstance())
+                .commit());
+
     }
 
-    @Override
-    public void showTest() {
-        Toast.makeText(this, "activity test success", Toast.LENGTH_SHORT).show();
-    }
 }

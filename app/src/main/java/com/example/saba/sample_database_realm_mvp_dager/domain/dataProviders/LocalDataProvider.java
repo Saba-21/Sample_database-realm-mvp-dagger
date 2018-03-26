@@ -1,24 +1,23 @@
 package com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders;
 
 
-
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModel;
+import java.util.List;
 
-import io.realm.RealmResults;
 
 public interface LocalDataProvider {
 
     void saveData(CarModel carModel);
 
-    RealmResults<CarModel> selectAll();
+    List<CarModel> selectAll();
 
-    RealmResults<CarModel> selectByMark(String mark);
+    List<CarModel> selectByMark(String mark);
 
-    RealmResults<CarModel> selectByModel(String model);
+    List<CarModel> selectByModel(String model);
 
-    RealmResults<CarModel> selectByType(String type);
+    List<CarModel> selectByType(String type);
 
-    RealmResults<CarModel> selectByCountry(String country);
+    List<CarModel> selectByCountry(String country);
 
     void dropAll();
 
