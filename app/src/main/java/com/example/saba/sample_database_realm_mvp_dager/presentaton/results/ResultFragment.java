@@ -10,17 +10,16 @@ import android.view.ViewGroup;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.example.saba.sample_database_realm_mvp_dager.R;
+import com.example.saba.sample_database_realm_mvp_dager.base.BaseFragment;
 import com.zuluft.autoadapter.AutoAdapter;
 import com.zuluft.generated.AutoAdapterFactory;
-import javax.inject.Inject;
-import dagger.android.support.DaggerFragment;
+import dagger.android.support.AndroidSupportInjection;
 
-public class ResultFragment extends DaggerFragment implements ResultsView{
+
+public class ResultFragment extends BaseFragment<ResultFragmentPresenterImpl> implements ResultsView{
 
     private Context context;
 
-    @Inject
-    ResultFragmentPresenterImpl mPresenter;
 
     public ResultFragment() {
     }
@@ -53,6 +52,7 @@ public class ResultFragment extends DaggerFragment implements ResultsView{
 
     @Override
     public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
         super.onAttach(context);
         this.context = context;
     }

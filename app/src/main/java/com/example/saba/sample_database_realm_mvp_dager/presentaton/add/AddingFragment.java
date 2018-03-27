@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import com.example.saba.sample_database_realm_mvp_dager.R;
-import javax.inject.Inject;
+import com.example.saba.sample_database_realm_mvp_dager.base.BaseFragment;
 import butterknife.BindView;
 import butterknife.OnClick;
-import dagger.android.support.DaggerFragment;
+import dagger.android.support.AndroidSupportInjection;
 
-public class AddingFragment extends DaggerFragment implements AddingView{
+public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> implements AddingView{
 
     @BindView(R.id.mark_input) EditText mark;
     @BindView(R.id.model_input) EditText model;
@@ -29,9 +29,6 @@ public class AddingFragment extends DaggerFragment implements AddingView{
                 id.getText().toString());
         clear();
     }
-
-    @Inject
-    AddingFragmentPresenterImpl mPresenter;
 
     public AddingFragment() {
     }
@@ -56,6 +53,7 @@ public class AddingFragment extends DaggerFragment implements AddingView{
 
     @Override
     public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
         super.onAttach(context);
     }
 

@@ -3,7 +3,7 @@ package com.example.saba.sample_database_realm_mvp_dager.base;
 
 import javax.annotation.Nonnull;
 
-public class BasePresenter<T> {
+public class BasePresenter<T extends BaseView> {
 
     protected T mView;
 

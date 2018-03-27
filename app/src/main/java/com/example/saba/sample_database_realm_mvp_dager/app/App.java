@@ -1,30 +1,28 @@
 package com.example.saba.sample_database_realm_mvp_dager.app;
 
-
-import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
+import android.app.Activity;
+import android.app.Application;
+import javax.inject.Inject;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class App extends DaggerApplication {
+public class App extends Application
+        implements HasActivityInjector{
 
-
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-
-        AppComponent appComponent = DaggerAppComponent
-                .builder()
-                .application(this)
-                .build();
-
-        appComponent.inject(this);
-
-        return appComponent;
-    }
+    @Inject
+    DispatchingAndroidInjector<Activity> mDispatchingAndroidActivityInjector;
 
     @Override
     public void onCreate() {
         super.onCreate();
         initRealm();
+        DaggerAppComponent
+                .builder()
+                .application(this)
+                .build()
+                .inject(this);
     }
 
     void initRealm() {
@@ -38,4 +36,8 @@ public class App extends DaggerApplication {
         Realm.setDefaultConfiguration(realmConfiguration);
     }
 
+    @Override
+    public DispatchingAndroidInjector<Activity> activityInjector() {
+        return mDispatchingAndroidActivityInjector;
+    }
 }

@@ -6,18 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.saba.sample_database_realm_mvp_dager.R;
-import javax.inject.Inject;
+import com.example.saba.sample_database_realm_mvp_dager.base.BaseFragment;
 import butterknife.OnClick;
-import dagger.android.support.DaggerFragment;
+import dagger.android.support.AndroidSupportInjection;
 
-public class DropFragment extends DaggerFragment implements DropView {
+public class DropFragment extends BaseFragment<DropPresenterImpl> implements DropView {
 
     @OnClick(R.id.drop) void add() {
         mPresenter.drop();
     }
-
-        @Inject
-    DropPresenterImpl mPresenter;
 
     public DropFragment() {
     }
@@ -40,6 +37,7 @@ public class DropFragment extends DaggerFragment implements DropView {
 
     @Override
     public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
         super.onAttach(context);
     }
 

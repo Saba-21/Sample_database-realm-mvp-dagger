@@ -1,6 +1,5 @@
 package com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders;
 
-
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModel;
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModelConstants;
 import java.util.List;
