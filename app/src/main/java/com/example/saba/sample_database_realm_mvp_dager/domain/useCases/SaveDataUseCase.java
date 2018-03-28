@@ -7,6 +7,8 @@ import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.base.Bas
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+
 
 public class SaveDataUseCase extends BaseUseCase {
 
@@ -15,8 +17,8 @@ public class SaveDataUseCase extends BaseUseCase {
         super(mRepository);
     }
 
-    public void save(CarModel car){
-        mRepository.saveData(car);
+    public Observable<Boolean> save(CarModel car){
+        return mRepository.saveData(car);
     }
 
 }

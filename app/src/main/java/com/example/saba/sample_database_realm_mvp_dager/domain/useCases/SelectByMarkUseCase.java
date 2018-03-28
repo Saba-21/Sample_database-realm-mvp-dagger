@@ -8,6 +8,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+
 
 public class SelectByMarkUseCase extends BaseUseCase {
 
@@ -16,7 +18,7 @@ public class SelectByMarkUseCase extends BaseUseCase {
         super(mRepository);
     }
 
-    public List<CarModel> select(String mark){
+    public Observable<List<CarModel>> select(String mark){
         return mRepository.selectByMark(mark);
     }
 

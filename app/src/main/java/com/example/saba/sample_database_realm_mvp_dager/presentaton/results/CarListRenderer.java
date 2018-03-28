@@ -1,6 +1,7 @@
 package com.example.saba.sample_database_realm_mvp_dager.presentaton.results;
 
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 import com.example.saba.sample_database_realm_mvp_dager.R;
@@ -33,7 +34,7 @@ import com.zuluft.generated.CarListRendererViewHolder;
                         name = "id",
                         type = TextView.class)
         })
-public class CarListRenderer extends Renderer<CarListRendererViewHolder>{
+public class CarListRenderer extends Renderer<CarListRendererViewHolder> {
 
         private final CarModel car;
 
@@ -41,6 +42,7 @@ public class CarListRenderer extends Renderer<CarListRendererViewHolder>{
                 this.car = car;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void apply(@NonNull final CarListRendererViewHolder viewHolder) {
                 viewHolder.mark.setText(car.getMark());
@@ -50,3 +52,4 @@ public class CarListRenderer extends Renderer<CarListRendererViewHolder>{
                 viewHolder.id.setText(Integer.toString(car.getId()));
         }
 }
+

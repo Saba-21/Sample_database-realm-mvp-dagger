@@ -8,6 +8,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+
 
 public class SelectByCountryUseCase extends BaseUseCase {
 
@@ -16,7 +18,7 @@ public class SelectByCountryUseCase extends BaseUseCase {
         super(mRepository);
     }
 
-    public List<CarModel> select(String country){
+    public Observable<List<CarModel>> select(String country){
         return mRepository.selectByCountry(country);
     }
 

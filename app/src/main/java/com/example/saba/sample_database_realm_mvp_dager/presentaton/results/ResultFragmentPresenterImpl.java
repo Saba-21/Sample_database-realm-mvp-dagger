@@ -7,6 +7,8 @@ import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.SelectAl
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 public class ResultFragmentPresenterImpl  extends BasePresenter<ResultsView> implements ResultFragmentPresenter {
 
     private SelectAllUseCase selectAllUseCase;
@@ -16,7 +18,7 @@ public class ResultFragmentPresenterImpl  extends BasePresenter<ResultsView> imp
     }
 
     @Override
-    public List<CarModel> getAllObjects() {
+    public Observable<List<CarModel>> getAllObjects() {
         return selectAllUseCase.select();
     }
 

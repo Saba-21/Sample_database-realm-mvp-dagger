@@ -3,30 +3,31 @@ package com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders;
 
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModel;
 import java.util.List;
+import io.reactivex.Observable;
 
 
 public interface LocalDataProvider {
 
-    void saveData(CarModel carModel);
+    Observable<Boolean> saveData(CarModel carModel);
 
-    List<CarModel> selectAll();
+    Observable<List<CarModel>> selectAll();
 
-    List<CarModel> selectByMark(String mark);
+    Observable<List<CarModel>> selectByMark(String mark);
 
-    List<CarModel> selectByModel(String model);
+    Observable<List<CarModel>> selectByModel(String model);
 
-    List<CarModel> selectByType(String type);
+    Observable<List<CarModel>> selectByType(String type);
 
-    List<CarModel> selectByCountry(String country);
+    Observable<List<CarModel>> selectByCountry(String country);
 
-    void dropAll();
+    Observable<Boolean> dropAll();
 
-    void dropByMark(String mark);
+    Observable<Boolean> dropByMark(String mark);
 
-    void dropByModel(String model);
+    Observable<Boolean> dropByModel(String model);
 
-    void dropByType(String type);
+    Observable<Boolean> dropByType(String type);
 
-    void dropByCountry(String country);
+    Observable<Boolean> dropByCountry(String country);
 
 }

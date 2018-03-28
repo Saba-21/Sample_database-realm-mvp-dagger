@@ -2,33 +2,23 @@ package com.example.saba.sample_database_realm_mvp_dager.presentaton.add;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import com.example.saba.sample_database_realm_mvp_dager.R;
 import com.example.saba.sample_database_realm_mvp_dager.base.BaseFragment;
-import butterknife.BindView;
-import butterknife.OnClick;
 import dagger.android.support.AndroidSupportInjection;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> implements AddingView{
 
-    @BindView(R.id.mark_input) EditText mark;
-    @BindView(R.id.model_input) EditText model;
-    @BindView(R.id.type_input) EditText type;
-    @BindView(R.id.country_input) EditText country;
-    @BindView(R.id.ID_input) EditText id;
-
-    @OnClick(R.id.add) void add(){
-        mPresenter.addObject(
-                mark.getText().toString(),
-                model.getText().toString(),
-                type.getText().toString(),
-                country.getText().toString(),
-                id.getText().toString());
-        clear();
-    }
+    private EditText mark,model,type,country,id;
 
     public AddingFragment() {
     }
@@ -38,16 +28,15 @@ public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> im
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_adding, container, false);
-
+        initView(view);
+        view.findViewById(R.id.add_input)
+                .setOnClickListener(v -> {
+                    addData();
+                    clear();
+        });
         mPresenter.attach(this);
-
         return view;
     }
 
@@ -63,6 +52,40 @@ public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> im
         type.getText().clear();
         country.getText().clear();
         id.getText().clear();
+    }
+
+    void initView(View view){
+        mark = view.findViewById(R.id.mark_input);
+        model = view.findViewById(R.id.model_input);
+        type = view.findViewById(R.id.type_input);
+        country = view.findViewById(R.id.country_input);
+        id = view.findViewById(R.id.ID_input);
+    }
+
+    public void addData(){
+        mPresenter.addObject(
+                mark.getText().toString(),
+                model.getText().toString(),
+                type.getText().toString(),
+                country.getText().toString(),
+                id.getText().toString()
+        ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) { }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        Log.i("onNext",Boolean.toString(aBoolean));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) { }
+
+                    @Override
+                    public void onComplete() { }
+                });
     }
 
 }

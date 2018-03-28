@@ -7,6 +7,8 @@ import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.base.Bas
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+
 
 public class DropByCountryUseCase extends BaseUseCase {
 
@@ -15,8 +17,8 @@ public class DropByCountryUseCase extends BaseUseCase {
         super(mRepository);
     }
 
-    public void drop(String country){
-        mRepository.dropByCountry(country);
+    public Observable<Boolean> drop(String country){
+        return mRepository.dropByCountry(country);
     }
 
 }

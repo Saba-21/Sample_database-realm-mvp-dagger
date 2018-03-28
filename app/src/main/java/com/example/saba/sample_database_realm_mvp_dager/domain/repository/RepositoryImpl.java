@@ -6,6 +6,7 @@ import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModel;
 import java.util.List;
 import javax.annotation.Nonnull;
 
+import io.reactivex.Observable;
 
 public class RepositoryImpl implements Repository {
 
@@ -16,57 +17,57 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void saveData(CarModel carModel) {
-        mLocalDataProvider.saveData(carModel);
+    public Observable<Boolean> saveData(CarModel carModel) {
+       return mLocalDataProvider.saveData(carModel);
     }
 
     @Override
-    public List<CarModel> selectAll() {
+    public Observable<List<CarModel>> selectAll() {
         return mLocalDataProvider.selectAll();
     }
 
     @Override
-    public List<CarModel> selectByMark(String mark) {
+    public Observable<List<CarModel>> selectByMark(String mark) {
         return mLocalDataProvider.selectByMark(mark);
     }
 
     @Override
-    public List<CarModel> selectByModel(String model) {
+    public Observable<List<CarModel>> selectByModel(String model) {
         return mLocalDataProvider.selectByModel(model);
     }
 
     @Override
-    public List<CarModel> selectByType(String type) {
+    public Observable<List<CarModel>> selectByType(String type) {
         return mLocalDataProvider.selectByType(type);
     }
 
     @Override
-    public List<CarModel> selectByCountry(String country) {
+    public Observable<List<CarModel>> selectByCountry(String country) {
         return mLocalDataProvider.selectByCountry(country);
     }
 
     @Override
-    public void dropAll() {
-        mLocalDataProvider.dropAll();
+    public Observable<Boolean> dropAll() {
+        return mLocalDataProvider.dropAll();
     }
 
     @Override
-    public void dropByMark(String mark) {
-        mLocalDataProvider.dropByMark(mark);
+    public Observable<Boolean> dropByMark(String mark) {
+        return mLocalDataProvider.dropByMark(mark);
     }
 
     @Override
-    public void dropByModel(String model) {
-        mLocalDataProvider.dropByModel(model);
+    public Observable<Boolean> dropByModel(String model) {
+       return mLocalDataProvider.dropByModel(model);
     }
 
     @Override
-    public void dropByType(String type) {
-        mLocalDataProvider.dropByType(type);
+    public Observable<Boolean> dropByType(String type) {
+        return mLocalDataProvider.dropByType(type);
     }
 
     @Override
-    public void dropByCountry(String country) {
-        mLocalDataProvider.dropByCountry(country);
+    public Observable<Boolean> dropByCountry(String country) {
+        return mLocalDataProvider.dropByCountry(country);
     }
 }
