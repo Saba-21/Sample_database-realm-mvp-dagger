@@ -37,24 +37,10 @@ public class DropFragment extends BaseFragment<DropPresenterImpl> implements Dro
     }
 
     private void dropData(){
-        mPresenter.drop()
+        mCompositeDisposable.add(mPresenter.drop()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Boolean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) { }
-
-                    @Override
-                    public void onNext(Boolean aBoolean) {
-                        Log.i("onNext",Boolean.toString(aBoolean));
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {e.printStackTrace(); }
-
-                    @Override
-                    public void onComplete() { }
-                });
+                .subscribe(result->Log.i("onNext",Boolean.toString(result))));
     }
 
 }

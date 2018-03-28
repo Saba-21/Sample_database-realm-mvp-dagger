@@ -12,17 +12,13 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.example.saba.sample_database_realm_mvp_dager.R;
 import com.example.saba.sample_database_realm_mvp_dager.base.BaseFragment;
-import com.example.saba.sample_database_realm_mvp_dager.domain.models.CarModel;
 import com.zuluft.autoadapter.AutoAdapter;
 import com.zuluft.generated.AutoAdapterFactory;
-import java.util.List;
 import dagger.android.support.AndroidSupportInjection;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ResultFragment extends BaseFragment<ResultFragmentPresenterImpl> implements ResultsView{
+public class ResultFragment extends BaseFragment<ResultFragmentPresenterImpl> implements ResultsView {
 
     private Context context;
     private AutoAdapter autoAdapter;
@@ -57,28 +53,16 @@ public class ResultFragment extends BaseFragment<ResultFragmentPresenterImpl> im
         this.context = context;
     }
 
-    private void getData(){
-         mPresenter.getAllObjects()
+    private void getData() {
+        mCompositeDisposable.add(mPresenter.getAllObjects()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<CarModel>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) { }
-
-                    @Override
-                    public void onNext(List<CarModel> carModels) {
-                        autoAdapter.addAll(Stream.of(carModels)
-                                .map(CarListRenderer::new)
-                                .collect(Collectors.toList()));
-                        autoAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) { }
-
-                    @Override
-                    public void onComplete() { }
-                });
+                .subscribe(carModels -> {
+                    autoAdapter.addAll(Stream.of(carModels)
+                            .map(CarListRenderer::new)
+                            .collect(Collectors.toList()));
+                    autoAdapter.notifyDataSetChanged();
+                }));
     }
 
 }

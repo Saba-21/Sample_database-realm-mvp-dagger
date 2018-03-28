@@ -63,7 +63,7 @@ public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> im
     }
 
     public void addData(){
-        mPresenter.addObject(
+        mCompositeDisposable.add(mPresenter.addObject(
                 mark.getText().toString(),
                 model.getText().toString(),
                 type.getText().toString(),
@@ -71,21 +71,7 @@ public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> im
                 id.getText().toString()
         ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Boolean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) { }
-
-                    @Override
-                    public void onNext(Boolean aBoolean) {
-                        Log.i("onNext",Boolean.toString(aBoolean));
-                    }
-
-                    @Override
-                    public void onError(Throwable e) { }
-
-                    @Override
-                    public void onComplete() { }
-                });
+                .subscribe(result-> Log.i("onNext",Boolean.toString(result))));
     }
 
 }
