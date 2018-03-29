@@ -7,11 +7,6 @@
     android:orientation="vertical"
     tools:context="com.example.saba.sample_database_realm_mvp_dager.presentaton.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,29 +15,18 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="add"
+                android:text="@string/add"
                 android:id="@+id/add_fragment"/>
-
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="drop"
-                android:id="@+id/drop_fragment"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="get"
+                android:text="@string/get"
                 android:id="@+id/get_fragment"/>
         </LinearLayout>
 
-    </LinearLayout>
-
-
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:id="@+id/frame_main">
     </FrameLayout>
 

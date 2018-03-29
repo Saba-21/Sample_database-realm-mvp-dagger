@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">Sample_database-realm-mvp-dager</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="base_url">https://api.github.com/</string>
+    <string name="name">name</string>
+    <string name="description">description</string>
+    <string name="language">language</string>
+    <string name="stars">stars</string>
+    <string name="id">id</string>
+    <string name="username">username</string>
+    <string name="search">search</string>
+    <string name="drop_all">drop all</string>
+    <string name="add">add</string>
+    <string name="drop">drop</string>
+    <string name="get">get</string>
 </resources>
