@@ -22,6 +22,7 @@ import com.zuluft.generated.AutoAdapterFactory;
 import java.util.List;
 import javax.annotation.Nonnull;
 import dagger.android.support.AndroidSupportInjection;
+import io.reactivex.Observable;
 
 public class AddingFragment extends BaseFragment<AddingPresenter> implements AddingView{
 
@@ -37,7 +38,6 @@ public class AddingFragment extends BaseFragment<AddingPresenter> implements Add
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_adding, container, false);
-        view.findViewById(R.id.get).setOnClickListener(v -> mPresenter.goToResults());
 
         RecyclerView recyclerView = view.findViewById(R.id.repos_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -46,13 +46,10 @@ public class AddingFragment extends BaseFragment<AddingPresenter> implements Add
 
         mPresenter.attach(this);
 
+        view.findViewById(R.id.get).setOnClickListener(v -> mPresenter.goToResults());
         EditText nameField = view.findViewById(R.id.username);
-        view.findViewById(R.id.search).setOnClickListener(v-> mPresenter.getData(nameField.getText().toString().trim()));
-
-        mCompositeDisposable.add(adapter.clicks(ReposRenderer.class)
-                .map(itemInfo->itemInfo.renderer)
-                .map(renderer->renderer.repo)
-                .subscribe(mPresenter::addData));
+        view.findViewById(R.id.search)
+                .setOnClickListener(v-> mPresenter.getData(nameField.getText().toString().trim()));
 
         return view;
     }
@@ -76,6 +73,13 @@ public class AddingFragment extends BaseFragment<AddingPresenter> implements Add
     @Override
     public void showAdded() {
         Toast.makeText(context, "repo added", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public Observable<GitHubRepo> getUserAction() {
+        return adapter.clicks(ReposRenderer.class)
+                .map(itemInfo->itemInfo.renderer)
+                .map(renderer->renderer.repo);
     }
 
 }

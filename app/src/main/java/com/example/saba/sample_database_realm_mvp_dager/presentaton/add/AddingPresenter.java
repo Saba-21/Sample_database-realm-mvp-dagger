@@ -4,6 +4,8 @@ import com.example.saba.sample_database_realm_mvp_dager.base.BasePresenter;
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
 import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.GetStarredReposUseCase;
 import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.SaveDataUseCase;
+
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -20,17 +22,22 @@ public class AddingPresenter extends BasePresenter<AddingView> {
     }
 
     public void getData(String userName) {
-         mCompositeDisposable.add(getStarredReposUseCase.getStarredRepos(userName)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mView::updateList));
+         mCompositeDisposable.addAll(
+                 getStarredReposUseCase.getStarredRepos(userName)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(mView::updateList),
+                 mView.getUserAction()
+                         .subscribeOn(Schedulers.io())
+                         .observeOn(AndroidSchedulers.mainThread())
+                         .flatMap(this::addData)
+                         .subscribe(this::showAdded));
     }
 
-    public void addData(GitHubRepo repo) {
-        mCompositeDisposable.add(saveDataUseCase.save(repo)
+    private Observable<Boolean> addData(GitHubRepo repo) {
+        return saveDataUseCase.save(repo)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::showAdded));
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public void goToResults() {

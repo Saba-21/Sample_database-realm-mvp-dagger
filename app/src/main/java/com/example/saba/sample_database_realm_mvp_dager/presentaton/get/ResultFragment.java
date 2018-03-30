@@ -19,6 +19,7 @@ import com.zuluft.generated.AutoAdapterFactory;
 import java.util.List;
 import javax.annotation.Nonnull;
 import dagger.android.support.AndroidSupportInjection;
+import io.reactivex.Observable;
 
 public class ResultFragment extends BaseFragment<ResultPresenter> implements ResultsView {
 
@@ -34,7 +35,6 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
-        view.findViewById(R.id.add).setOnClickListener(v -> mPresenter.goToAdding());
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -43,11 +43,10 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
 
         mPresenter.attach(this);
 
-        mPresenter.getData();
+        view.findViewById(R.id.add)
+                .setOnClickListener(v -> mPresenter.goToAdding());
 
-        mCompositeDisposable.add(adapter.clicks(ReposRenderer.class)
-                .map(itemInfo->itemInfo.position)
-                .subscribe(mPresenter::dropData));
+        mPresenter.getData();
 
         return view;
     }
@@ -72,6 +71,12 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
     public void updateList(int position) {
         adapter.remove(position);
         adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public Observable<Integer> getUserAction(){
+        return adapter.clicks(ReposRenderer.class)
+                .map(itemInfo->itemInfo.position);
     }
 
 }

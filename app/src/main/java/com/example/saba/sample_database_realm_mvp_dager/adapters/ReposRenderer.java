@@ -9,6 +9,8 @@ import com.zuluft.autoadapterannotations.Render;
 import com.zuluft.autoadapterannotations.ViewField;
 import com.zuluft.generated.ReposRendererViewHolder;
 
+import javax.annotation.Nonnull;
+
 @Render(layout = R.layout.repo_item,
         views = {
                 @ViewField(
@@ -34,9 +36,10 @@ import com.zuluft.generated.ReposRendererViewHolder;
         })
 public class ReposRenderer extends Renderer<ReposRendererViewHolder>{
 
+        @Nonnull
         public GitHubRepo repo;
 
-        public ReposRenderer(final GitHubRepo gitHubRepo) { this.repo = gitHubRepo; }
+        public ReposRenderer(@Nonnull final GitHubRepo gitHubRepo) { this.repo = gitHubRepo; }
 
         @SuppressLint("SetTextI18n")
         @Override

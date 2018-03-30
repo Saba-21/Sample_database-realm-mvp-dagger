@@ -34,8 +34,10 @@ public class LocalDataProviderImpl implements LocalDataProvider {
     public Observable<List<GitHubRepo>> selectAll() {
         List<GitHubRepo> repos = Realm
                 .getDefaultInstance()
-                .where(GitHubRepo.class)
-                .findAll();
+                .copyFromRealm(Realm.
+                        getDefaultInstance()
+                        .where(GitHubRepo.class)
+                        .findAll());
         return Observable.just(repos);
     }
 
