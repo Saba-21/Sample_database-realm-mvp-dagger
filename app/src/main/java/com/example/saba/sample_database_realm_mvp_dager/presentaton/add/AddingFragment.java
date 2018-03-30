@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.example.saba.sample_database_realm_mvp_dager.R;
@@ -21,7 +23,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import dagger.android.support.AndroidSupportInjection;
 
-public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> implements AddingView{
+public class AddingFragment extends BaseFragment<AddingPresenter> implements AddingView{
 
     private AutoAdapter adapter;
     private Context context;
@@ -35,6 +37,7 @@ public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> im
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_adding, container, false);
+        view.findViewById(R.id.get).setOnClickListener(v -> mPresenter.goToResults());
 
         RecyclerView recyclerView = view.findViewById(R.id.repos_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -68,6 +71,11 @@ public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> im
                 .map(ReposRenderer::new)
                 .collect(Collectors.toList()));
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showAdded() {
+        Toast.makeText(context, "repo added", Toast.LENGTH_SHORT).show();
     }
 
 }

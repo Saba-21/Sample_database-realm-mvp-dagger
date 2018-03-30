@@ -10,7 +10,6 @@
     <string name="username">username</string>
     <string name="search">search</string>
     <string name="drop_all">drop all</string>
-    <string name="add">add</string>
-    <string name="drop">drop</string>
-    <string name="get">get</string>
+    <string name="add">go to add</string>
+    <string name="get">go to get</string>
 </resources>

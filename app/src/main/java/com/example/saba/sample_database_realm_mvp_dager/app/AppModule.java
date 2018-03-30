@@ -102,7 +102,8 @@ abstract class AppModule {
 
     @Provides
     @Singleton
-    static Repository provideRepository(@Nonnull final LocalDataProvider localDataProvider, @Nonnull final GlobalDataProvider globalDataProvider){
+    static Repository provideRepository(@Nonnull final LocalDataProvider localDataProvider,
+                                        @Nonnull final GlobalDataProvider globalDataProvider){
         return new RepositoryImpl(localDataProvider,globalDataProvider);
     }
 

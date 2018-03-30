@@ -6,17 +6,18 @@ import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.SelectAl
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class ResultFragmentPresenterImpl  extends BasePresenter<ResultsView> implements ResultFragmentPresenter {
+public class ResultPresenter extends BasePresenter<ResultsView> {
 
     private SelectAllUseCase selectAllUseCase;
     private DropUseCase dropUseCase;
+    private ResultsNavigator resultsNavigator;
 
-    ResultFragmentPresenterImpl(SelectAllUseCase selectAllUseCase, DropUseCase dropUseCase) {
+    ResultPresenter(SelectAllUseCase selectAllUseCase, DropUseCase dropUseCase, ResultsNavigator resultsNavigator) {
         this.selectAllUseCase = selectAllUseCase;
         this.dropUseCase = dropUseCase;
+        this.resultsNavigator = resultsNavigator;
     }
 
-    @Override
     public void getData() {
          mCompositeDisposable.add(selectAllUseCase.select()
                 .subscribeOn(Schedulers.io())
@@ -24,13 +25,15 @@ public class ResultFragmentPresenterImpl  extends BasePresenter<ResultsView> imp
                 .subscribe(mView::updateList));
     }
 
-    @Override
     public void dropData(int position) {
         mCompositeDisposable.add(dropUseCase.drop(position)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe());
-        mView.updateList(position);
+                .subscribe(r -> mView.updateList(position)));
+    }
+
+    public void goToAdding() {
+        resultsNavigator.goToAddingScreen();
     }
 
 }

@@ -17,6 +17,10 @@ public class App extends Application implements HasActivityInjector{
     public void onCreate() {
         super.onCreate();
         initRealm();
+        initDagger();
+    }
+
+    private void initDagger(){
         DaggerAppComponent
                 .builder()
                 .application(this)
@@ -24,7 +28,7 @@ public class App extends Application implements HasActivityInjector{
                 .inject(this);
     }
 
-    void initRealm() {
+    private void initRealm() {
         Realm.init(this);
         RealmConfiguration realmConfiguration = new RealmConfiguration
                 .Builder()

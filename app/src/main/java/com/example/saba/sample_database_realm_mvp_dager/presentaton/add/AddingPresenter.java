@@ -7,30 +7,39 @@ import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.SaveData
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class AddingFragmentPresenterImpl extends BasePresenter<AddingView> implements AddingFragmentPresenter {
+public class AddingPresenter extends BasePresenter<AddingView> {
 
-    private final SaveDataUseCase saveDataUseCase;
-    private final GetStarredReposUseCase getStarredReposUseCase;
+    private SaveDataUseCase saveDataUseCase;
+    private GetStarredReposUseCase getStarredReposUseCase;
+    private AddingNavigator addingNavigator;
 
-    AddingFragmentPresenterImpl(SaveDataUseCase saveDataUseCase, GetStarredReposUseCase getStarredReposUseCase) {
+    AddingPresenter(SaveDataUseCase saveDataUseCase, GetStarredReposUseCase getStarredReposUseCase, AddingNavigator addingNavigator) {
         this.saveDataUseCase = saveDataUseCase;
         this.getStarredReposUseCase = getStarredReposUseCase;
+        this.addingNavigator = addingNavigator;
     }
 
-    @Override
     public void getData(String userName) {
          mCompositeDisposable.add(getStarredReposUseCase.getStarredRepos(userName)
-                 .subscribeOn(Schedulers.io())
-                 .observeOn(AndroidSchedulers.mainThread())
-                 .subscribe(mView::updateList));
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mView::updateList));
     }
 
-    @Override
     public void addData(GitHubRepo repo) {
         mCompositeDisposable.add(saveDataUseCase.save(repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe());
+                .subscribe(this::showAdded));
+    }
+
+    public void goToResults() {
+        addingNavigator.goToResultsScreen();
+    }
+
+    private void showAdded(Boolean isAdded){
+        if (isAdded)
+            mView.showAdded();
     }
 
 }

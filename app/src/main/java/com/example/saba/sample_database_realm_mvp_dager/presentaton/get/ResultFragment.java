@@ -20,7 +20,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import dagger.android.support.AndroidSupportInjection;
 
-public class ResultFragment extends BaseFragment<ResultFragmentPresenterImpl> implements ResultsView {
+public class ResultFragment extends BaseFragment<ResultPresenter> implements ResultsView {
 
     private AutoAdapter adapter;
     private Context context;
@@ -34,6 +34,7 @@ public class ResultFragment extends BaseFragment<ResultFragmentPresenterImpl> im
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
+        view.findViewById(R.id.add).setOnClickListener(v -> mPresenter.goToAdding());
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
