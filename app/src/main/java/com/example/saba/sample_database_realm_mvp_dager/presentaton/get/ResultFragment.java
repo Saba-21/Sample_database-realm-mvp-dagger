@@ -47,6 +47,9 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
                 .setOnClickListener(v -> mPresenter.goToAdding());
 
         mPresenter.getData();
+        mPresenter.subscribeUserAction(adapter
+                .clicks(ReposRenderer.class)
+                .map(itemInfo->itemInfo.position));
 
         return view;
     }
@@ -71,12 +74,6 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
     public void updateList(int position) {
         adapter.remove(position);
         adapter.notifyItemRemoved(position);
-    }
-
-    @Override
-    public Observable<Integer> getUserAction(){
-        return adapter.clicks(ReposRenderer.class)
-                .map(itemInfo->itemInfo.position);
     }
 
 }

@@ -20,16 +20,19 @@ public class ResultPresenter extends BasePresenter<ResultsView> {
     }
 
     public void getData() {
-         mCompositeDisposable.addAll(
+         mCompositeDisposable.add(
                  selectAllUseCase.select()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(mView::updateList),
-                 mView.getUserAction()
-                         .subscribeOn(Schedulers.io())
-                         .observeOn(AndroidSchedulers.mainThread())
-                         .flatMap(this::dropData)
-                         .subscribe(mView::updateList));
+                        .subscribe(mView::updateList));
+    }
+
+    public void subscribeUserAction(Observable<Integer> userAction){
+        mCompositeDisposable.add(userAction
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(this::dropData)
+                .subscribe(mView::updateList));
     }
 
     private Observable<Integer> dropData(int position) {

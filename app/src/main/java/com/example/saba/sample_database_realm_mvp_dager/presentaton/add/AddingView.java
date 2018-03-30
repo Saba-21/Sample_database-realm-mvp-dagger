@@ -13,6 +13,4 @@ interface AddingView extends BaseView{
 
     void showAdded();
 
-    Observable<GitHubRepo> getUserAction();
-
 }

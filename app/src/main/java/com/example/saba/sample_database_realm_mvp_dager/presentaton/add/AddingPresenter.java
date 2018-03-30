@@ -22,16 +22,19 @@ public class AddingPresenter extends BasePresenter<AddingView> {
     }
 
     public void getData(String userName) {
-         mCompositeDisposable.addAll(
+         mCompositeDisposable.add(
                  getStarredReposUseCase.getStarredRepos(userName)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(mView::updateList),
-                 mView.getUserAction()
-                         .subscribeOn(Schedulers.io())
-                         .observeOn(AndroidSchedulers.mainThread())
-                         .flatMap(this::addData)
-                         .subscribe(this::showAdded));
+                        .subscribe(mView::updateList));
+    }
+
+    public void subscribeUserAction(Observable<GitHubRepo> userAction){
+        mCompositeDisposable.add(userAction
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(this::addData)
+                .subscribe(r -> mView.showAdded()));
     }
 
     private Observable<Boolean> addData(GitHubRepo repo) {
@@ -42,11 +45,6 @@ public class AddingPresenter extends BasePresenter<AddingView> {
 
     public void goToResults() {
         addingNavigator.goToResultsScreen();
-    }
-
-    private void showAdded(Boolean isAdded){
-        if (isAdded)
-            mView.showAdded();
     }
 
 }

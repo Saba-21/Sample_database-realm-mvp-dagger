@@ -51,6 +51,11 @@ public class AddingFragment extends BaseFragment<AddingPresenter> implements Add
         view.findViewById(R.id.search)
                 .setOnClickListener(v-> mPresenter.getData(nameField.getText().toString().trim()));
 
+        mPresenter.subscribeUserAction(adapter
+                .clicks(ReposRenderer.class)
+                .map(itemInfo->itemInfo.renderer)
+                .map(renderer->renderer.repo));
+
         return view;
     }
 
@@ -73,13 +78,6 @@ public class AddingFragment extends BaseFragment<AddingPresenter> implements Add
     @Override
     public void showAdded() {
         Toast.makeText(context, "repo added", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public Observable<GitHubRepo> getUserAction() {
-        return adapter.clicks(ReposRenderer.class)
-                .map(itemInfo->itemInfo.renderer)
-                .map(renderer->renderer.repo);
     }
 
 }
