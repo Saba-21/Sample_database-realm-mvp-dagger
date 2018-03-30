@@ -5,7 +5,7 @@
     <string name="name">name</string>
     <string name="description">description</string>
     <string name="language">language</string>
-    <string name="stars">stars</string>
+    <string name="stars">star</string>
     <string name="id">id</string>
     <string name="username">username</string>
     <string name="search">search</string>

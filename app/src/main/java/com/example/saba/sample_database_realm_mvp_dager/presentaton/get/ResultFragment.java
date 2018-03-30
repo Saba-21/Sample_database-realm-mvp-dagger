@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.example.saba.sample_database_realm_mvp_dager.R;
@@ -17,14 +16,9 @@ import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo
 import com.example.saba.sample_database_realm_mvp_dager.adapters.ReposRenderer;
 import com.zuluft.autoadapter.AutoAdapter;
 import com.zuluft.generated.AutoAdapterFactory;
-
 import java.util.List;
-
 import javax.annotation.Nonnull;
-
 import dagger.android.support.AndroidSupportInjection;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class ResultFragment extends BaseFragment<ResultFragmentPresenterImpl> implements ResultsView {
 
@@ -48,12 +42,11 @@ public class ResultFragment extends BaseFragment<ResultFragmentPresenterImpl> im
 
         mPresenter.attach(this);
 
-        getData();
+        mPresenter.getData();
 
         mCompositeDisposable.add(adapter.clicks(ReposRenderer.class)
                 .map(itemInfo->itemInfo.position)
-                .flatMap(position -> mPresenter.dropData(position).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()))
-                .subscribe(this::updateList));
+                .subscribe(mPresenter::dropData));
 
         return view;
     }
@@ -65,12 +58,8 @@ public class ResultFragment extends BaseFragment<ResultFragmentPresenterImpl> im
         this.context = context;
     }
 
-    private void updateList(int position){
-        adapter.remove(position);
-        adapter.notifyItemRemoved(position);
-    }
-
-    private void updateList(@Nonnull final List<GitHubRepo> repos){
+    @Override
+    public void updateList(@Nonnull final List<GitHubRepo> repos){
         adapter.removeAll();
         adapter.addAll(Stream.of(repos)
                 .map(ReposRenderer::new)
@@ -78,11 +67,10 @@ public class ResultFragment extends BaseFragment<ResultFragmentPresenterImpl> im
         adapter.notifyDataSetChanged();
     }
 
-    private void getData() {
-        mCompositeDisposable.add(mPresenter.getData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updateList));
+    @Override
+    public void updateList(int position) {
+        adapter.remove(position);
+        adapter.notifyItemRemoved(position);
     }
 
 }

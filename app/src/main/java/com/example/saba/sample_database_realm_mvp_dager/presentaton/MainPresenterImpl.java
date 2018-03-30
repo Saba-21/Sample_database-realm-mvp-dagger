@@ -8,4 +8,13 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 
     MainPresenterImpl() { }
 
+    @Override
+    public void drawAddFragment() {
+        mView.drawAddFragment();
+    }
+
+    @Override
+    public void drawGetFragment() {
+        mView.drawGetFragment();
+    }
 }

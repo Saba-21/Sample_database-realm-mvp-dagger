@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.example.saba.sample_database_realm_mvp_dager.R;
@@ -21,8 +20,6 @@ import com.zuluft.generated.AutoAdapterFactory;
 import java.util.List;
 import javax.annotation.Nonnull;
 import dagger.android.support.AndroidSupportInjection;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> implements AddingView{
 
@@ -45,14 +42,14 @@ public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> im
         recyclerView.setAdapter(adapter);
 
         mPresenter.attach(this);
+
         EditText nameField = view.findViewById(R.id.username);
-        view.findViewById(R.id.search).setOnClickListener(v-> getData(nameField.getText().toString().trim()));
+        view.findViewById(R.id.search).setOnClickListener(v-> mPresenter.getData(nameField.getText().toString().trim()));
 
         mCompositeDisposable.add(adapter.clicks(ReposRenderer.class)
                 .map(itemInfo->itemInfo.renderer)
                 .map(renderer->renderer.repo)
-                .flatMap(repo -> mPresenter.addData(repo).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()))
-                .subscribe());
+                .subscribe(mPresenter::addData));
 
         return view;
     }
@@ -64,19 +61,13 @@ public class AddingFragment extends BaseFragment<AddingFragmentPresenterImpl> im
         this.context = context;
     }
 
-    private void updateList(@Nonnull final List<GitHubRepo> repos){
+    @Override
+    public void updateList(@Nonnull final List<GitHubRepo> repos){
         adapter.removeAll();
         adapter.addAll(Stream.of(repos)
                 .map(ReposRenderer::new)
                 .collect(Collectors.toList()));
         adapter.notifyDataSetChanged();
-    }
-
-    private void getData(@Nonnull final String username){
-        mCompositeDisposable.add(mPresenter.getData(username)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updateList));
     }
 
 }

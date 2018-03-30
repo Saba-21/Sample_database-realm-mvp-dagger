@@ -12,16 +12,10 @@ import dagger.android.AndroidInjection;
 public class MainActivity extends BaseActivity<MainPresenterImpl> implements MainView {
 
     @OnClick(R.id.add_fragment) void add() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_main, AddingFragment.newInstance())
-                .commit();
+        mPresenter.drawAddFragment();
     }
     @OnClick(R.id.get_fragment) void get() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_main, ResultFragment.newInstance())
-                .commit();
+        mPresenter.drawGetFragment();
     }
 
     @Override
@@ -33,4 +27,19 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
         mPresenter.attach(this);
     }
 
+    @Override
+    public void drawAddFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_main, AddingFragment.newInstance())
+                .commit();
+    }
+
+    @Override
+    public void drawGetFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_main, ResultFragment.newInstance())
+                .commit();
+    }
 }

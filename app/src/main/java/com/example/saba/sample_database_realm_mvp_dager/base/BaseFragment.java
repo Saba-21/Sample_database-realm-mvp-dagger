@@ -17,15 +17,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
 
     @Override
     public void onDestroyView() {
-        mPresenter.detach();
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDetach() {
         mCompositeDisposable.dispose();
         mCompositeDisposable.clear();
-        super.onDetach();
+        mPresenter.detach();
+        super.onDestroyView();
     }
 
 }

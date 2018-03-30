@@ -1,11 +1,10 @@
 package com.example.saba.sample_database_realm_mvp_dager.presentaton.get;
 
 import com.example.saba.sample_database_realm_mvp_dager.base.BasePresenter;
-import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
 import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.DropUseCase;
 import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.SelectAllUseCase;
-import java.util.List;
-import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class ResultFragmentPresenterImpl  extends BasePresenter<ResultsView> implements ResultFragmentPresenter {
 
@@ -18,13 +17,20 @@ public class ResultFragmentPresenterImpl  extends BasePresenter<ResultsView> imp
     }
 
     @Override
-    public Observable<List<GitHubRepo>> getData() {
-        return selectAllUseCase.select();
+    public void getData() {
+         mCompositeDisposable.add(selectAllUseCase.select()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mView::updateList));
     }
 
     @Override
-    public Observable<Integer> dropData(int position) {
-        return dropUseCase.drop(position);
+    public void dropData(int position) {
+        mCompositeDisposable.add(dropUseCase.drop(position)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
+        mView.updateList(position);
     }
 
 }
