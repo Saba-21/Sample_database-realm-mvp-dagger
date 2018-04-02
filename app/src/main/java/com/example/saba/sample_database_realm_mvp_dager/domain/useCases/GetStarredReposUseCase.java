@@ -11,7 +11,7 @@ import io.reactivex.Observable;
 public class GetStarredReposUseCase extends BaseUseCase{
 
     @Inject
-    public GetStarredReposUseCase(@Nonnull Repository mRepository) {
+    GetStarredReposUseCase(@Nonnull Repository mRepository) {
         super(mRepository);
     }
 

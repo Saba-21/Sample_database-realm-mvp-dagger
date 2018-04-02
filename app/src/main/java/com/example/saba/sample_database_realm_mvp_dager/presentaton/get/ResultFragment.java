@@ -19,12 +19,10 @@ import com.zuluft.generated.AutoAdapterFactory;
 import java.util.List;
 import javax.annotation.Nonnull;
 import dagger.android.support.AndroidSupportInjection;
-import io.reactivex.Observable;
 
 public class ResultFragment extends BaseFragment<ResultPresenter> implements ResultsView {
 
     private AutoAdapter adapter;
-    private Context context;
 
     public ResultFragment() { }
 
@@ -37,19 +35,20 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
         View view = inflater.inflate(R.layout.fragment_result, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         adapter = AutoAdapterFactory.createAutoAdapter();
         recyclerView.setAdapter(adapter);
 
         mPresenter.attach(this);
 
         view.findViewById(R.id.add)
-                .setOnClickListener(v -> mPresenter.goToAdding());
+                .setOnClickListener(v -> mPresenter.goToAddingScreen());
 
-        mPresenter.getData();
         mPresenter.subscribeUserAction(adapter
                 .clicks(ReposRenderer.class)
                 .map(itemInfo->itemInfo.position));
+
+        mPresenter.getData();
 
         return view;
     }
@@ -58,7 +57,6 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
         super.onAttach(context);
-        this.context = context;
     }
 
     @Override

@@ -12,7 +12,7 @@ import io.reactivex.Observable;
 public class SelectAllUseCase extends BaseUseCase {
 
     @Inject
-    public SelectAllUseCase(@Nonnull Repository mRepository) {
+    SelectAllUseCase(@Nonnull Repository mRepository) {
         super(mRepository);
     }
 

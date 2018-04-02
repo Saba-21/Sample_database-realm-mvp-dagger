@@ -33,17 +33,22 @@ public class AddingPresenter extends BasePresenter<AddingView> {
         mCompositeDisposable.add(userAction
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(this::addData)
-                .subscribe(r -> mView.showAdded()));
+                .flatMap(this::saveData)
+                .subscribe(this::showAdded));
     }
 
-    private Observable<Boolean> addData(GitHubRepo repo) {
+    private Observable<Boolean> saveData(GitHubRepo repo) {
         return saveDataUseCase.save(repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public void goToResults() {
+    private void showAdded(boolean result){
+        if (result)
+            mView.showAdded();
+    }
+
+    public void goToResultsScreen() {
         addingNavigator.goToResultsScreen();
     }
 

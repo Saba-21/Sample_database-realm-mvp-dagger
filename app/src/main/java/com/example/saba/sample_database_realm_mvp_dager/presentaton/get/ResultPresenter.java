@@ -41,7 +41,7 @@ public class ResultPresenter extends BasePresenter<ResultsView> {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public void goToAdding() {
+    public void goToAddingScreen() {
         resultsNavigator.goToAddingScreen();
     }
 

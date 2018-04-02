@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 public class DropUseCase extends BaseUseCase {
 
     @Inject
-    public DropUseCase(@Nonnull Repository mRepository) {
+    DropUseCase(@Nonnull Repository mRepository) {
         super(mRepository);
     }
 

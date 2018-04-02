@@ -32,12 +32,11 @@ public class LocalDataProviderImpl implements LocalDataProvider {
 
     @Override
     public Observable<List<GitHubRepo>> selectAll() {
-        List<GitHubRepo> repos = Realm
-                .getDefaultInstance()
-                .copyFromRealm(Realm.
-                        getDefaultInstance()
+        Realm realm = Realm.getDefaultInstance();
+        List<GitHubRepo> repos = realm.copyFromRealm(realm
                         .where(GitHubRepo.class)
                         .findAll());
+        realm.close();
         return Observable.just(repos);
     }
 

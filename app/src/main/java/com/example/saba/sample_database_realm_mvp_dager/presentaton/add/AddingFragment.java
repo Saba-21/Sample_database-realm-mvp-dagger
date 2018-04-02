@@ -22,7 +22,6 @@ import com.zuluft.generated.AutoAdapterFactory;
 import java.util.List;
 import javax.annotation.Nonnull;
 import dagger.android.support.AndroidSupportInjection;
-import io.reactivex.Observable;
 
 public class AddingFragment extends BaseFragment<AddingPresenter> implements AddingView{
 
@@ -40,13 +39,14 @@ public class AddingFragment extends BaseFragment<AddingPresenter> implements Add
         View view = inflater.inflate(R.layout.fragment_adding, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.repos_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         adapter = AutoAdapterFactory.createAutoAdapter();
         recyclerView.setAdapter(adapter);
 
         mPresenter.attach(this);
 
-        view.findViewById(R.id.get).setOnClickListener(v -> mPresenter.goToResults());
+        view.findViewById(R.id.get).setOnClickListener(v -> mPresenter.goToResultsScreen());
+
         EditText nameField = view.findViewById(R.id.username);
         view.findViewById(R.id.search)
                 .setOnClickListener(v-> mPresenter.getData(nameField.getText().toString().trim()));

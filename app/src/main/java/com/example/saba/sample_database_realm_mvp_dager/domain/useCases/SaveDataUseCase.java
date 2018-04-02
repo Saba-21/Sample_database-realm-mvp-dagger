@@ -10,7 +10,7 @@ import io.reactivex.Observable;
 public class SaveDataUseCase extends BaseUseCase {
 
     @Inject
-    public SaveDataUseCase(@Nonnull Repository mRepository) {
+    SaveDataUseCase(@Nonnull Repository mRepository) {
         super(mRepository);
     }
 
