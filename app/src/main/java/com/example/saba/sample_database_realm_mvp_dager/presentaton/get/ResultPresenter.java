@@ -1,6 +1,9 @@
 package com.example.saba.sample_database_realm_mvp_dager.presentaton.get;
 
+import android.util.Log;
+
 import com.example.saba.sample_database_realm_mvp_dager.base.BasePresenter;
+import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
 import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.DropUseCase;
 import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.SelectAllUseCase;
 import io.reactivex.Observable;
@@ -27,22 +30,26 @@ public class ResultPresenter extends BasePresenter<ResultsView> {
                         .subscribe(mView::updateList));
     }
 
-    public void subscribeUserAction(Observable<Integer> userAction){
+    public void subscribeUserAction(Observable<GitHubRepo> userAction){
         mCompositeDisposable.add(userAction
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(this::dropData)
-                .subscribe(mView::updateList));
+                .subscribe(this::log));
     }
 
-    private Observable<Integer> dropData(int position) {
-        return dropUseCase.drop(position)
+    private Observable<GitHubRepo> dropData(GitHubRepo gitHubRepo) {
+        return dropUseCase.drop(gitHubRepo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public void goToAddingScreen() {
         resultsNavigator.goToAddingScreen();
+    }
+
+    private void log(GitHubRepo repo){
+        Log.i("deleted: ",repo.getName());
     }
 
 }

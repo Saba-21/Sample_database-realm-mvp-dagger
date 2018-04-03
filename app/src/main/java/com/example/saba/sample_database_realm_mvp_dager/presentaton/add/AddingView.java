@@ -5,12 +5,8 @@ import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo
 import java.util.List;
 import javax.annotation.Nonnull;
 
-import io.reactivex.Observable;
-
 interface AddingView extends BaseView{
 
     void updateList(@Nonnull final List<GitHubRepo> repos);
-
-    void showAdded();
 
 }

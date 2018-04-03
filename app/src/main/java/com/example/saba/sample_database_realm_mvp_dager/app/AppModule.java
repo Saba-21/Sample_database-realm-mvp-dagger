@@ -1,11 +1,13 @@
 package com.example.saba.sample_database_realm_mvp_dager.app;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import com.example.saba.sample_database_realm_mvp_dager.R;
 import com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders.globalDataProvider.GlobalDataProvider;
 import com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders.locadDataProvider.LocalDataProvider;
 import com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders.locadDataProvider.LocalDataProviderImpl;
+import com.example.saba.sample_database_realm_mvp_dager.domain.database.RepoDB;
 import com.example.saba.sample_database_realm_mvp_dager.domain.repository.Repository;
 import com.example.saba.sample_database_realm_mvp_dager.domain.repository.RepositoryImpl;
 import com.google.gson.Gson;
@@ -96,8 +98,14 @@ abstract class AppModule {
 
     @Provides
     @Singleton
-    static LocalDataProvider provideLocalDataProvider(){
-        return new LocalDataProviderImpl();
+    static RepoDB provideDatabase(Context context){
+        return Room.databaseBuilder(context,RepoDB.class,"RepoDB").build();
+    }
+
+    @Provides
+    @Singleton
+    static LocalDataProvider provideLocalDataProvider(RepoDB repoDB){
+        return new LocalDataProviderImpl(repoDB);
     }
 
     @Provides

@@ -1,25 +1,29 @@
 package com.example.saba.sample_database_realm_mvp_dager.adapters;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.widget.TextView;
 import com.example.saba.sample_database_realm_mvp_dager.R;
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
-import com.zuluft.autoadapter.renderables.Renderer;
+import com.zuluft.autoadapter.renderables.OrderableRenderer;
 import com.zuluft.autoadapterannotations.Render;
 import com.zuluft.autoadapterannotations.ViewField;
 import com.zuluft.generated.ReposRendererViewHolder;
-
 import javax.annotation.Nonnull;
 
 @Render(layout = R.layout.repo_item,
         views = {
+//                @ViewField(
+//                        id = R.id.list_avatar,
+//                        name = "avatar",
+//                        type = SimpleDraweeView.class),
+//                @ViewField(
+//                        id = R.id.list_user,
+//                        name = "user",
+//                        type = TextView.class),
                 @ViewField(
                         id = R.id.list_name,
                         name = "name",
-                        type = TextView.class),
-                @ViewField(
-                        id = R.id.list_desc,
-                        name = "desc",
                         type = TextView.class),
                 @ViewField(
                         id = R.id.list_language,
@@ -28,26 +32,41 @@ import javax.annotation.Nonnull;
                 @ViewField(
                         id = R.id.list_stars,
                         name = "stars",
-                        type = TextView.class),
-                @ViewField(
-                        id = R.id.list_id,
-                        name = "id",
                         type = TextView.class)
         })
-public class ReposRenderer extends Renderer<ReposRendererViewHolder>{
+public class ReposRenderer extends OrderableRenderer<ReposRendererViewHolder> {
 
         @Nonnull
-        public GitHubRepo repo;
+        public final GitHubRepo repo;
 
         public ReposRenderer(@Nonnull final GitHubRepo gitHubRepo) { this.repo = gitHubRepo; }
 
         @SuppressLint("SetTextI18n")
         @Override
         public void apply(ReposRendererViewHolder viewHolder) {
+//                viewHolder.avatar.setImageURI(Uri.parse(repo.getOwner().getAvatar()));
+//                viewHolder.user.setText(repo.getOwner().getName());
                 viewHolder.name.setText(repo.getName());
                 viewHolder.language.setText(repo.getLanguage());
                 viewHolder.stars.setText(Integer.toString(repo.getStarCount()));
-                viewHolder.desc.setText(repo.getDescription());
-                viewHolder.id.setText(Integer.toString(repo.getId()));
+        }
+
+        private GitHubRepo getRepo(@Nonnull final OrderableRenderer orderableRenderer){
+                return ((ReposRenderer)orderableRenderer).repo;
+        }
+
+        @Override
+        public int compareTo(@NonNull OrderableRenderer renderer) {
+                return Integer.compare(getRepo(renderer).getStarCount(),repo.getStarCount());
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull OrderableRenderer renderer) {
+                return Integer.valueOf(repo.getId()).equals(getRepo(renderer).getId());
+        }
+
+        @Override
+        public boolean areItemsTheSame(@NonNull OrderableRenderer renderer) {
+                return Integer.valueOf(repo.getId()).equals(getRepo(renderer).getId());
         }
 }

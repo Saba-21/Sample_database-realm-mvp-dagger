@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Sample_database-realm-mvp-dagger.iml" filepath="$PROJECT_DIR$/Sample_database-realm-mvp-dagger.iml" />
       <module fileurl="file://$PROJECT_DIR$/Sample_databaserealmmvpdager.iml" filepath="$PROJECT_DIR$/Sample_databaserealmmvpdager.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

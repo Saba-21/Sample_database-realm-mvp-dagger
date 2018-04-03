@@ -8,10 +8,10 @@ public interface Repository {
 
     Observable<List<GitHubRepo>> getStarredRepos(String userName);
 
-    Observable<Boolean> saveData(GitHubRepo gitHubRepo);
+    Observable<GitHubRepo> saveData(GitHubRepo gitHubRepo);
 
     Observable<List<GitHubRepo>> selectAll();
 
-    Observable<Integer> drop(int position);
+    Observable<GitHubRepo> drop(GitHubRepo gitHubRepo);
 
 }

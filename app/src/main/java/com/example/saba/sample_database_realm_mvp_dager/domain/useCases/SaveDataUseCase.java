@@ -14,7 +14,7 @@ public class SaveDataUseCase extends BaseUseCase {
         super(mRepository);
     }
 
-    public Observable<Boolean> save(GitHubRepo gitHubRepo){
+    public Observable<GitHubRepo> save(GitHubRepo gitHubRepo){
         return mRepository.saveData(gitHubRepo);
     }
 

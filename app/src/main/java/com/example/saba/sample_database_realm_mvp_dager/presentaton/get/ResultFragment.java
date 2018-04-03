@@ -14,7 +14,7 @@ import com.example.saba.sample_database_realm_mvp_dager.R;
 import com.example.saba.sample_database_realm_mvp_dager.base.BaseFragment;
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
 import com.example.saba.sample_database_realm_mvp_dager.adapters.ReposRenderer;
-import com.zuluft.autoadapter.AutoAdapter;
+import com.zuluft.autoadapter.SortedAutoAdapter;
 import com.zuluft.generated.AutoAdapterFactory;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -22,7 +22,7 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class ResultFragment extends BaseFragment<ResultPresenter> implements ResultsView {
 
-    private AutoAdapter adapter;
+    private SortedAutoAdapter adapter;
 
     public ResultFragment() { }
 
@@ -36,7 +36,7 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        adapter = AutoAdapterFactory.createAutoAdapter();
+        adapter = AutoAdapterFactory.createSortedAutoAdapter();
         recyclerView.setAdapter(adapter);
 
         mPresenter.attach(this);
@@ -46,7 +46,8 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
 
         mPresenter.subscribeUserAction(adapter
                 .clicks(ReposRenderer.class)
-                .map(itemInfo->itemInfo.position));
+                .map(itemInfo->itemInfo.renderer)
+                .map(renderer->renderer.repo));
 
         mPresenter.getData();
 
@@ -61,17 +62,9 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
 
     @Override
     public void updateList(@Nonnull final List<GitHubRepo> repos){
-        adapter.removeAll();
-        adapter.addAll(Stream.of(repos)
+        adapter.updateAll(Stream.of(repos)
                 .map(ReposRenderer::new)
                 .collect(Collectors.toList()));
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void updateList(int position) {
-        adapter.remove(position);
-        adapter.notifyItemRemoved(position);
     }
 
 }

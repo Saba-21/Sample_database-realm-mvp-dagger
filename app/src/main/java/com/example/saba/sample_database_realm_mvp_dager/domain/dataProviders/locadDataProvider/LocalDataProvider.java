@@ -6,10 +6,10 @@ import io.reactivex.Observable;
 
 public interface LocalDataProvider {
 
-    Observable<Boolean> saveData(GitHubRepo gitHubRepo);
+    Observable<GitHubRepo> saveData(GitHubRepo gitHubRepo);
 
     Observable<List<GitHubRepo>> selectAll();
 
-    Observable<Integer> drop(int position);
+    Observable<GitHubRepo> drop(GitHubRepo gitHubRepo);
 
 }

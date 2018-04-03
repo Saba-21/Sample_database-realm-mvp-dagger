@@ -1,5 +1,7 @@
 package com.example.saba.sample_database_realm_mvp_dager.presentaton.add;
 
+import android.util.Log;
+
 import com.example.saba.sample_database_realm_mvp_dager.base.BasePresenter;
 import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
 import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.GetStarredReposUseCase;
@@ -34,22 +36,21 @@ public class AddingPresenter extends BasePresenter<AddingView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(this::saveData)
-                .subscribe(this::showAdded));
+                .subscribe(this::log));
     }
 
-    private Observable<Boolean> saveData(GitHubRepo repo) {
+    private Observable<GitHubRepo> saveData(GitHubRepo repo) {
         return saveDataUseCase.save(repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private void showAdded(boolean result){
-        if (result)
-            mView.showAdded();
-    }
-
     public void goToResultsScreen() {
         addingNavigator.goToResultsScreen();
+    }
+
+    private void log(GitHubRepo repo){
+        Log.i("saved: ",repo.getName());
     }
 
 }

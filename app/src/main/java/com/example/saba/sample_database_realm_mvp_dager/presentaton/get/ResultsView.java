@@ -9,6 +9,4 @@ interface ResultsView extends BaseView{
 
     void updateList(@Nonnull final List<GitHubRepo> repos);
 
-    void updateList(int position);
-
 }

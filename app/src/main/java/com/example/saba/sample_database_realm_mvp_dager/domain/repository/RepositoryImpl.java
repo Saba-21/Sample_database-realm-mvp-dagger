@@ -23,7 +23,7 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Observable<Boolean> saveData(GitHubRepo gitHubRepo) {
+    public Observable<GitHubRepo> saveData(GitHubRepo gitHubRepo) {
        return mLocalDataProvider.saveData(gitHubRepo);
     }
 
@@ -33,8 +33,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Observable<Integer> drop(int position) {
-        return mLocalDataProvider.drop(position);
+    public Observable<GitHubRepo> drop(GitHubRepo gitHubRepo) {
+        return mLocalDataProvider.drop(gitHubRepo);
     }
 
 }
