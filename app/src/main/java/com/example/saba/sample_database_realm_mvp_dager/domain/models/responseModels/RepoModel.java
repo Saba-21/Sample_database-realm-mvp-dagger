@@ -1,34 +1,29 @@
-package com.example.saba.sample_database_realm_mvp_dager.domain.models;
+package com.example.saba.sample_database_realm_mvp_dager.domain.models.responseModels;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "repos")
-public class GitHubRepo {
+public class RepoModel {
 
-    @PrimaryKey
     private  int id;
     private  String name;
     private  String language;
     @SerializedName("stargazers_count")
     private  int starCount;
+    private OwnerModel owner;
 
-    @Ignore
-    public GitHubRepo(int id, String name, String language, int starCount) {
+    public RepoModel() { }
+
+    public RepoModel(int id, String name, String language, int starCount, OwnerModel owner) {
         this.id = id;
         this.name = name;
         this.language = language;
         this.starCount = starCount;
+        this.owner = owner;
     }
 
-    public GitHubRepo() {
-        this.id = 0;
-        this.name = "";
-        this.language = "";
-        this.starCount = 0;
-    }
+    public OwnerModel getOwner() { return owner; }
+
+    public void setOwner(OwnerModel owner) { this.owner = owner; }
 
     public int getId() {
         return id;

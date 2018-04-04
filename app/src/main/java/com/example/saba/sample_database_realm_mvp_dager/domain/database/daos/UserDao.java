@@ -5,20 +5,19 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
-import com.example.saba.sample_database_realm_mvp_dager.domain.models.dbModels.RepoDbModel;
+import com.example.saba.sample_database_realm_mvp_dager.domain.models.dbModels.OwnerDbModel;
 import java.util.List;
-import io.reactivex.Flowable;
 
 @Dao
-public interface RepoDao {
+public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(RepoDbModel repo);
+    void insert(OwnerDbModel owner);
 
-    @Query("Select * From repos")
-    Flowable<List<RepoDbModel>> selectAll();
+    @Query("Select * From owners")
+    List<OwnerDbModel> selectAll();
 
     @Delete
-    void drop(RepoDbModel repo);
+    void drop(OwnerDbModel owner);
 
 }

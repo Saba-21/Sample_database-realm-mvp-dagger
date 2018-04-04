@@ -12,7 +12,7 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.example.saba.sample_database_realm_mvp_dager.R;
 import com.example.saba.sample_database_realm_mvp_dager.base.BaseFragment;
-import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
+import com.example.saba.sample_database_realm_mvp_dager.domain.models.responseModels.RepoModel;
 import com.example.saba.sample_database_realm_mvp_dager.adapters.ReposRenderer;
 import com.zuluft.autoadapter.SortedAutoAdapter;
 import com.zuluft.generated.AutoAdapterFactory;
@@ -44,12 +44,12 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
         view.findViewById(R.id.add)
                 .setOnClickListener(v -> mPresenter.goToAddingScreen());
 
+        mPresenter.getData();
+
         mPresenter.subscribeUserAction(adapter
                 .clicks(ReposRenderer.class)
                 .map(itemInfo->itemInfo.renderer)
                 .map(renderer->renderer.repo));
-
-        mPresenter.getData();
 
         return view;
     }
@@ -61,7 +61,7 @@ public class ResultFragment extends BaseFragment<ResultPresenter> implements Res
     }
 
     @Override
-    public void updateList(@Nonnull final List<GitHubRepo> repos){
+    public void updateList(@Nonnull final List<RepoModel> repos){
         adapter.updateAll(Stream.of(repos)
                 .map(ReposRenderer::new)
                 .collect(Collectors.toList()));

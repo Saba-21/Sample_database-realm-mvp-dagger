@@ -3,7 +3,7 @@ package com.example.saba.sample_database_realm_mvp_dager.presentaton.add;
 import android.util.Log;
 
 import com.example.saba.sample_database_realm_mvp_dager.base.BasePresenter;
-import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
+import com.example.saba.sample_database_realm_mvp_dager.domain.models.responseModels.RepoModel;
 import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.GetStarredReposUseCase;
 import com.example.saba.sample_database_realm_mvp_dager.domain.useCases.SaveDataUseCase;
 
@@ -31,7 +31,7 @@ public class AddingPresenter extends BasePresenter<AddingView> {
                         .subscribe(mView::updateList));
     }
 
-    public void subscribeUserAction(Observable<GitHubRepo> userAction){
+    public void subscribeUserAction(Observable<RepoModel> userAction){
         mCompositeDisposable.add(userAction
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -39,7 +39,7 @@ public class AddingPresenter extends BasePresenter<AddingView> {
                 .subscribe(this::log));
     }
 
-    private Observable<GitHubRepo> saveData(GitHubRepo repo) {
+    private Observable<RepoModel> saveData(RepoModel repo) {
         return saveDataUseCase.save(repo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -49,8 +49,6 @@ public class AddingPresenter extends BasePresenter<AddingView> {
         addingNavigator.goToResultsScreen();
     }
 
-    private void log(GitHubRepo repo){
-        Log.i("saved: ",repo.getName());
-    }
+    private void log(RepoModel repo){ Log.i("saved: ",repo.getOwner().getLogin()); }
 
 }

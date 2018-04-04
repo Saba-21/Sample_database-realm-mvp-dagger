@@ -2,14 +2,8 @@
     <string name="app_name">Sample_database-realm-mvp-dager</string>
 
     <string name="base_url">https://api.github.com/</string>
-    <string name="name">name</string>
-    <string name="description">description</string>
-    <string name="language">language</string>
-    <string name="stars">star</string>
-    <string name="id">id</string>
     <string name="username">username</string>
     <string name="search">search</string>
-    <string name="drop_all">drop all</string>
     <string name="add">go to add</string>
     <string name="get">go to get</string>
 </resources>

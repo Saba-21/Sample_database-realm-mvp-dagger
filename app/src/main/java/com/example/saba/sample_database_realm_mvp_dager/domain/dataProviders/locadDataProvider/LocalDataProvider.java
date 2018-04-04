@@ -1,15 +1,16 @@
 package com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders.locadDataProvider;
 
-import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
+import com.example.saba.sample_database_realm_mvp_dager.domain.models.responseModels.RepoModel;
+
 import java.util.List;
 import io.reactivex.Observable;
 
 public interface LocalDataProvider {
 
-    Observable<GitHubRepo> saveData(GitHubRepo gitHubRepo);
+    Observable<RepoModel> saveData(RepoModel repoModel);
 
-    Observable<List<GitHubRepo>> selectAll();
+    Observable<List<RepoModel>> selectAll();
 
-    Observable<GitHubRepo> drop(GitHubRepo gitHubRepo);
+    Observable<RepoModel> drop(RepoModel repoModel);
 
 }

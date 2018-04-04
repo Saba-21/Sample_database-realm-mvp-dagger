@@ -1,10 +1,12 @@
 package com.example.saba.sample_database_realm_mvp_dager.adapters;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 import com.example.saba.sample_database_realm_mvp_dager.R;
-import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
+import com.example.saba.sample_database_realm_mvp_dager.domain.models.responseModels.RepoModel;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.zuluft.autoadapter.renderables.OrderableRenderer;
 import com.zuluft.autoadapterannotations.Render;
 import com.zuluft.autoadapterannotations.ViewField;
@@ -13,14 +15,14 @@ import javax.annotation.Nonnull;
 
 @Render(layout = R.layout.repo_item,
         views = {
-//                @ViewField(
-//                        id = R.id.list_avatar,
-//                        name = "avatar",
-//                        type = SimpleDraweeView.class),
-//                @ViewField(
-//                        id = R.id.list_user,
-//                        name = "user",
-//                        type = TextView.class),
+                @ViewField(
+                        id = R.id.list_avatar,
+                        name = "avatar",
+                        type = SimpleDraweeView.class),
+                @ViewField(
+                        id = R.id.list_user,
+                        name = "user",
+                        type = TextView.class),
                 @ViewField(
                         id = R.id.list_name,
                         name = "name",
@@ -37,21 +39,21 @@ import javax.annotation.Nonnull;
 public class ReposRenderer extends OrderableRenderer<ReposRendererViewHolder> {
 
         @Nonnull
-        public final GitHubRepo repo;
+        public final RepoModel repo;
 
-        public ReposRenderer(@Nonnull final GitHubRepo gitHubRepo) { this.repo = gitHubRepo; }
+        public ReposRenderer(@Nonnull final RepoModel repoModel) { this.repo = repoModel; }
 
         @SuppressLint("SetTextI18n")
         @Override
         public void apply(ReposRendererViewHolder viewHolder) {
-//                viewHolder.avatar.setImageURI(Uri.parse(repo.getOwner().getAvatar()));
-//                viewHolder.user.setText(repo.getOwner().getName());
+                viewHolder.avatar.setImageURI(Uri.parse(repo.getOwner().getAvatar()));
+                viewHolder.user.setText(repo.getOwner().getLogin());
                 viewHolder.name.setText(repo.getName());
                 viewHolder.language.setText(repo.getLanguage());
                 viewHolder.stars.setText(Integer.toString(repo.getStarCount()));
         }
 
-        private GitHubRepo getRepo(@Nonnull final OrderableRenderer orderableRenderer){
+        private RepoModel getRepo(@Nonnull final OrderableRenderer orderableRenderer){
                 return ((ReposRenderer)orderableRenderer).repo;
         }
 

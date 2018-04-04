@@ -2,7 +2,8 @@ package com.example.saba.sample_database_realm_mvp_dager.domain.repository;
 
 import com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders.globalDataProvider.GlobalDataProvider;
 import com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders.locadDataProvider.LocalDataProvider;
-import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
+import com.example.saba.sample_database_realm_mvp_dager.domain.models.responseModels.RepoModel;
+
 import java.util.List;
 import javax.annotation.Nonnull;
 import io.reactivex.Observable;
@@ -18,23 +19,23 @@ public class RepositoryImpl implements Repository {
         this.mGlobalDataProvider = globalDataProvider;
     }
 
-    public Observable<List<GitHubRepo>> getStarredRepos (String userName) {
+    public Observable<List<RepoModel>> getStarredRepos (String userName) {
         return mGlobalDataProvider.getStarredRepositories(userName);
     }
 
     @Override
-    public Observable<GitHubRepo> saveData(GitHubRepo gitHubRepo) {
-       return mLocalDataProvider.saveData(gitHubRepo);
+    public Observable<RepoModel> saveData(RepoModel repoModel) {
+       return mLocalDataProvider.saveData(repoModel);
     }
 
     @Override
-    public Observable<List<GitHubRepo>> selectAll() {
+    public Observable<List<RepoModel>> selectAll() {
         return mLocalDataProvider.selectAll();
     }
 
     @Override
-    public Observable<GitHubRepo> drop(GitHubRepo gitHubRepo) {
-        return mLocalDataProvider.drop(gitHubRepo);
+    public Observable<RepoModel> drop(RepoModel repoModel) {
+        return mLocalDataProvider.drop(repoModel);
     }
 
 }

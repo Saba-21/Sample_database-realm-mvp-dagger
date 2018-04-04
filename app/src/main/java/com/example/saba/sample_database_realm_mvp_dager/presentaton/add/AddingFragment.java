@@ -14,7 +14,7 @@ import com.annimon.stream.Stream;
 import com.example.saba.sample_database_realm_mvp_dager.R;
 import com.example.saba.sample_database_realm_mvp_dager.adapters.ReposRenderer;
 import com.example.saba.sample_database_realm_mvp_dager.base.BaseFragment;
-import com.example.saba.sample_database_realm_mvp_dager.domain.models.GitHubRepo;
+import com.example.saba.sample_database_realm_mvp_dager.domain.models.responseModels.RepoModel;
 import com.zuluft.autoadapter.SortedAutoAdapter;
 import com.zuluft.generated.AutoAdapterFactory;
 import java.util.List;
@@ -62,7 +62,7 @@ public class AddingFragment extends BaseFragment<AddingPresenter> implements Add
     }
 
     @Override
-    public void updateList(@Nonnull final List<GitHubRepo> repos){
+    public void updateList(@Nonnull final List<RepoModel> repos){
         adapter.updateAll(Stream.of(repos)
                 .map(ReposRenderer::new)
                 .collect(Collectors.toList()));

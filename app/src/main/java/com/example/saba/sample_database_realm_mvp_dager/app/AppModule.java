@@ -3,6 +3,8 @@ package com.example.saba.sample_database_realm_mvp_dager.app;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.support.annotation.NonNull;
+
 import com.example.saba.sample_database_realm_mvp_dager.R;
 import com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders.globalDataProvider.GlobalDataProvider;
 import com.example.saba.sample_database_realm_mvp_dager.domain.dataProviders.locadDataProvider.LocalDataProvider;
@@ -99,7 +101,7 @@ abstract class AppModule {
     @Provides
     @Singleton
     static RepoDB provideDatabase(Context context){
-        return Room.databaseBuilder(context,RepoDB.class,"RepoDB").build();
+        return Room.databaseBuilder(context,RepoDB.class,"RepoDB").fallbackToDestructiveMigration().build();
     }
 
     @Provides
