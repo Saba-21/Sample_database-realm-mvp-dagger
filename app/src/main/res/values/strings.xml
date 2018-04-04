@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sample_database-realm-mvp-dager</string>
+    <string name="app_name">Sample-db-api</string>
 
     <string name="base_url">https://api.github.com/</string>
     <string name="username">username</string>
